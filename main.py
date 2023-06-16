@@ -28,6 +28,8 @@ def find_ref_point():
         if flag == True:
             video_img = cv.rotate(video_img, cv.ROTATE_180)
         video_gray = cv.cvtColor(video_img, cv.COLOR_BGR2GRAY)
+
+        img_height, img_width = len(video_gray), len(video_gray[0])
         video_gray = cv.GaussianBlur(video_gray, (7, 7), 0)
         ret, video_thresh = cv.threshold(video_gray, 130, 255, 0)
         contours, hierarchy = cv.findContours(video_thresh, cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
@@ -61,7 +63,7 @@ def find_ref_point():
             # Проверяем на попадание в центр
             coord_y = coord_y + (height // 2)
             coord_x = coord_x + (width // 2)
-            if (coord_x > (640//2 - 75)) & (coord_x < (640//2 + 75)) & (coord_y > (480//2 - 75)) & (coord_y < (480//2 + 75)):
+            if (coord_x > (img_width//2 - 75)) & (coord_x < (img_width//2 + 75)) & (coord_y > (img_height//2 - 75)) & (coord_y < (img_height//2 + 75)):
                 flag = not flag
 
         # Выводим результат
